@@ -1,4 +1,4 @@
-// import { PrismaClient } from "@prisma/client";
+import Link from 'next/link'
 
 export type Task = {
   id: number;
@@ -10,11 +10,8 @@ export type Task = {
 }
 
 export async function getStaticProps() {
-  // const prisma = new PrismaClient()
-  // const data = await prisma.task.findMany()
-
 	try {
-		const res = await fetch("http://localhost:3000/")
+		const res = await fetch("http://localhost:8080/")
 		if (!res.ok) {
 			throw new Error(
 				`Unable to Fetch Data, Please check URL or Network connectivity!!`
@@ -35,10 +32,14 @@ export async function getStaticProps() {
 
 export default function Home({ data: tasks }: { data: Task[] }) {
   return (
-	<ul> 
-		{tasks.map((task: Task) => (
-			<li key={task.id}>{task.title}</li>
-		))}
-	</ul>
+	<>
+		<h1>Todo App</h1>
+		<Link href="/task">Create Task</Link>
+		<ul> 
+			{tasks.map((task: Task) => (
+				<li key={task.id}>{task.title}</li>
+			))}
+		</ul>
+	</>
   )
 }
